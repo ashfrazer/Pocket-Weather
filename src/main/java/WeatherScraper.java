@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class WeatherScraper {
 
-    public WeatherData scrapeData(String zipcode) {
+    public WeatherData scrapeData(String zipcode) throws WeatherScraperException {
         // Create the URL
         String url = "https://weather.com/weather/today/l/" + zipcode;
 
@@ -22,6 +22,10 @@ public class WeatherScraper {
         try {
             // Access the HTML page
             doc = Jsoup.connect(url).get();
+
+            if (doc.select("h1.CurrentConditions--location--yub4l").isEmpty()) {
+                throw new WeatherScraperException("Invalid zip code");
+            }
 
             // Scrape the location (based on zipcode)
             location = getElementText(doc.select("h1.CurrentConditions--location--yub4l").first());
@@ -43,7 +47,7 @@ public class WeatherScraper {
                     .last());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new WeatherScraperException("Error scraping weather data.");
         }
 
         // Create WeatherData object containing weather info
