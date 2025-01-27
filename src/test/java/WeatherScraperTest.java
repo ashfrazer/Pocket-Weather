@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeatherScraperTest {
     @Test
@@ -25,15 +25,6 @@ public class WeatherScraperTest {
     @Test
     void testInvalidZipCode() throws WeatherScraperException {
         WeatherScraper scraper = new WeatherScraper();
-        WeatherData data = scraper.scrapeData("00000");
-
-        // Ensure that proper string is returned upon invalid entries
-        assertNotNull(data);
-        assertEquals("UNKNOWN", data.getLocation());
-        assertEquals("No data found.", data.getTemperature());
-        assertEquals("No data found.", data.getCondition());
-        assertEquals("No data found.", data.getHigh());
-        assertEquals("No data found.", data.getLow());
-        assertEquals("No data found.", data.getTime());
+        assertThrows(WeatherScraperException.class, () -> scraper.scrapeData("00000"));
     }
 }
