@@ -13,7 +13,7 @@ I created a dozen icons that correspond with the current weather condition of yo
   <img src="https://raw.githubusercontent.com/ashfrazer/Pocket-Weather/master/src/main/resources/imgs/lightning.png" alt="Lightning" />
 </p>
 
-## How to use Pocket Weather
+## How to Run Pocket Weather
 Once you clone this repository, navigate to the **WeatherApp** class. This class is the executable portion of the program. Once you run **WeatherApp*,
 the user interface should generate. 
 
