@@ -35,7 +35,7 @@ public class WeatherApp extends JFrame {
         WeatherScraper weatherScraper = new WeatherScraper();
         this.weatherController = new WeatherController(weatherScraper, this);
 
-        frame = new JFrame("Weather Scraper");
+        frame = new JFrame("Pocket Weather");
 
         frame.setIconImage(new ImageIcon("src/main/resources/imgs/rain.png").getImage());
 
