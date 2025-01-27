@@ -14,9 +14,14 @@ I created a dozen icons that correspond with the current weather condition of yo
 </p>
 
 ## How to Run Pocket Weather
-Once you clone this repository, enter `mvn exec:java` into the terminal (assuming you have Maven installed). If you do not have Maven installed, navigate 
-to the *WeatherApp* class and run the program. This class is the executable portion of the program. Once you run *WeatherApp*, the user interface should 
-generate. 
+Once you clone this repository, there are a few different options to run Pocket Weather.
+
+If you want to run the JAR file, open your terminal and navigate to the project. Then, enter the command `java -jar target/Pocket-Weather-1.0-SNAPSHOT.jar`.
+
+Another option is to open your IDE and enter `mvn exec:java` into the terminal (assuming you have Maven installed). 
+
+If you do not have Maven installed, navigate to the *WeatherApp* class and run the program. This class is the executable portion of the program. Once you run 
+*WeatherApp*, the user interface should generate. 
 
 Proceed to enter in a zip code of your choice, and then enjoy the results!
 
