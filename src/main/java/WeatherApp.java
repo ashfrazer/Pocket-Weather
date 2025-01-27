@@ -208,6 +208,8 @@ public class WeatherApp extends JFrame {
         } else if (conditionLower.contains("cloudy")) {
             imagePath = isDay ? "src/main/resources/imgs/partly-cloudy-sun.png" :
                     "src/main/resources/imgs/partly-cloudy-moon.png";
+        } else if (conditionLower.contains("snow")) {
+            imagePath = "src/main/resources/imgs/snow.png";
         } else if (conditionLower.contains("rain") || conditionLower.contains("shower") ||
                 conditionLower.contains("hail")) {
             imagePath = isDay ? "src/main/resources/imgs/rain.png" : "src/main/resources/imgs/rain-night.png";
@@ -215,8 +217,6 @@ public class WeatherApp extends JFrame {
             imagePath = "src/main/resources/imgs/lightning.png";
         } else if (conditionLower.contains("clear") || conditionLower.contains("fair")) {
             imagePath = "src/main/resources/imgs/clear.png";
-        } else if (conditionLower.contains("snow")) {
-            imagePath = "src/main/resources/imgs/snow.png";
         } else if (conditionLower.contains("sleet")) {
             imagePath = "src/main/resources/imgs/sleet.png";
         } else if (conditionLower.contains("fog")) {
