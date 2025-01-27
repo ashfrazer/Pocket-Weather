@@ -35,13 +35,9 @@ public class WeatherApp extends JFrame {
         WeatherScraper weatherScraper = new WeatherScraper();
         this.weatherController = new WeatherController(weatherScraper, this);
 
-        this.zipcode = "72032";
-
-        // TO-DO: GUI LOGIC
         frame = new JFrame("Weather Scraper");
 
-        // TO-DO: Set Icon?
-        // frame.setIconImage(new ImageIcon(imgURL).getImage());
+        frame.setIconImage(new ImageIcon("src/main/resources/imgs/rain.png").getImage());
 
         // Exit program on close
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,12 +104,6 @@ public class WeatherApp extends JFrame {
         temperaturePanel.add(highLabel);
         temperaturePanel.add(lowLabel);
 
-        // Icon (COME BACK TO THIS LATER)
-        // \BufferedImage placeholderImage = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
-        //Graphics2D g2d = placeholderImage.createGraphics();
-        //g2d.setColor(Color.WHITE);
-        //g2d.fillRect(0, 0, 150, 150);
-        //g2d.dispose();
 
         iconLabel = new JLabel();
         iconLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
@@ -223,7 +213,7 @@ public class WeatherApp extends JFrame {
         } else if (conditionLower.equals("partly cloudy")) {
             imagePath = isDay ? "src/main/resources/imgs/partly-cloudy-sun.png" :
                     "src/main/resources/imgs/partly-cloudy-moon.png";
-        } else if (conditionLower.contains("clear")) {
+        } else if (conditionLower.contains("clear") || conditionLower.contains("fair")) {
             imagePath = "src/main/resources/imgs/clear.png";
         } else if (conditionLower.contains("snow")) {
             imagePath = "src/main/resources/imgs/snow.png";
