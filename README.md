@@ -9,6 +9,9 @@ from https://weather.com/.
 
 I created a dozen icons that correspond with the current weather condition of your specified location.
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ashfrazer/Pocket-Weather/master/src/main/resources/imgs/lightning.png" alt="Lightning" />
+</p>
 
 ## How to use Pocket Weather
 Once you clone this repository, navigate to the **WeatherApp** class. This class is the executable portion of the program. Once you run **WeatherApp*,
@@ -19,7 +22,3 @@ Proceed to enter in a zip code of your choice, and then enjoy the results!
 ## How to Test Pocket Weather (Maven)
 The class **WeatherScraperTest** is a test class that ensures that any potential errors found in scraping weather dad are caught. To run a test
 in Maven (assuming you have Maven installed), enter `mvn test` into the IDE's terminal. This will execute **WeatherScraperTest**.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ashfrazer/Pocket-Weather/master/src/main/resources/imgs/lightning.png" alt="Lightning" />
-</p>
