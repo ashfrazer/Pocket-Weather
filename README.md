@@ -26,5 +26,4 @@ If you do not have Maven installed, navigate to the *WeatherApp* class and run t
 Proceed to enter in a zip code of your choice, and then enjoy the results!
 
 ## How to Test Pocket Weather (Maven)
-The class **WeatherScraperTest** is a test class that ensures that any potential errors found in scraping weather dad are caught. To run a test
-in Maven (assuming you have Maven installed), enter `mvn test` into the IDE's terminal. This will execute **WeatherScraperTest**.
+The class **WeatherScraperTest** is a test class that ensures that any potential errors found in scraping weather dad are caught. To run the test (requiring Maven), navigate to the project's directory in your terminal and enter `mvn test`. This will execute **WeatherScraperTest**.
