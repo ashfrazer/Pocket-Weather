@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,10 @@ public class WeatherApp extends JFrame {
     private JLabel conditionLabel;
     private JLabel highLabel;
     private JLabel lowLabel;
-    private ImageIcon weatherIcon;
+    private JLabel iconLabel;
+    private JLabel timeLabel;
+    private BufferedImage weatherImage;
+
 
     public WeatherApp() {
         try {
@@ -60,10 +64,16 @@ public class WeatherApp extends JFrame {
         locationLabel.setForeground(Color.WHITE);
         locationLabel.setFont(new Font(customFont.getFontName(), Font.BOLD, 25));
 
-        locationLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 30, 5));
+        locationLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 30, 10));
+
+        // Time label
+        timeLabel = new JLabel("");
+        timeLabel.setForeground(Color.WHITE);
+        timeLabel.setFont(new Font(customFont.getFontName(), Font.BOLD, 15));
 
         // Add components to North label
         northPanel.add(locationLabel);
+        northPanel.add(timeLabel);
 
         // Center panel
         JPanel centerPanel = new JPanel(new BorderLayout());
@@ -99,20 +109,21 @@ public class WeatherApp extends JFrame {
         temperaturePanel.add(lowLabel);
 
         // Icon (COME BACK TO THIS LATER)
-        BufferedImage placeholderImage = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = placeholderImage.createGraphics();
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, 150, 150);
-        g2d.dispose();
+        // \BufferedImage placeholderImage = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
+        //Graphics2D g2d = placeholderImage.createGraphics();
+        //g2d.setColor(Color.WHITE);
+        //g2d.fillRect(0, 0, 150, 150);
+        //g2d.dispose();
 
-        weatherIcon = new ImageIcon(placeholderImage);
-        JLabel iconLabel = new JLabel(weatherIcon);
+        iconLabel = new JLabel();
         iconLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
 
         // Condition label
         conditionLabel = new JLabel("");
         conditionLabel.setForeground(Color.WHITE);
         conditionLabel.setFont(new Font(customFont.getFontName(), Font.BOLD, 18));
+        conditionLabel.setPreferredSize(new Dimension(180, 50));
+        conditionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Icon and Condition panel
         JPanel iconPanel = new JPanel();
@@ -174,13 +185,85 @@ public class WeatherApp extends JFrame {
         frame.pack();
         frame.setVisible(true);
     }
+    private String getWeatherIconPath(String condition, String time) {
+        String imagePath;
+        String conditionLower = condition.toLowerCase();
+
+        // Extract hour from time
+        int hour = -1;
+        try {
+            // Split hour from time
+            String[] timeParts = time.split(" ");
+            String[] hourMinute = timeParts[0].split(":");
+            hour = Integer.parseInt(hourMinute[0]);
+
+            // Convert to military time
+            if (timeParts[1].equalsIgnoreCase("PM") && hour != 12) {
+                hour += 12;
+            } else if (timeParts[1].equalsIgnoreCase("AM") && hour == 12) {
+                hour = 0; // midnight
+            }
+        } catch (Exception e) {
+            hour = -1;  // default
+        }
+
+        // Check if it is currently day or night
+        boolean isDay = hour >= 6 && hour < 18;
+
+        // Check condition and time of day for the icon
+        if (conditionLower.contains("sunny")) {
+            imagePath = "src/main/resources/imgs/sun.png";
+        } else if (conditionLower.equals("cloudy") || conditionLower.contains("overcast")) {
+            imagePath = "src/main/resources/imgs/cloud.png";
+        } else if (conditionLower.contains("rain") || conditionLower.contains("shower") ||
+                conditionLower.contains("hail")) {
+            imagePath = isDay ? "src/main/resources/imgs/rain.png" : "src/main/resources/imgs/rain-night.png";
+        } else if (conditionLower.contains("storm")) {
+            imagePath = "src/main/resources/imgs/lightning.png";
+        } else if (conditionLower.equals("partly cloudy")) {
+            imagePath = isDay ? "src/main/resources/imgs/partly-cloudy-sun.png" :
+                    "src/main/resources/imgs/partly-cloudy-moon.png";
+        } else if (conditionLower.contains("clear")) {
+            imagePath = "src/main/resources/imgs/clear.png";
+        } else if (conditionLower.contains("snow")) {
+            imagePath = "src/main/resources/imgs/snow.png";
+        } else if (conditionLower.contains("sleet")) {
+            imagePath = "src/main/resources/imgs/sleet.png";
+        } else if (conditionLower.contains("fog")) {
+            imagePath = "src/main/resources/imgs/fog.png";
+        } else if (conditionLower.contains("mist")) {
+            imagePath = "src/main/resources/imgs/mist.png";
+        } else if (conditionLower.contains("wind")) {
+            imagePath = "src/main/resources/imgs/wind.png";
+        } else {
+            imagePath = "src/main/resources/imgs/sun.png";
+        }
+
+        return imagePath;
+    }
+
     public void updateWeatherUI(WeatherData weatherData) {
-        // TO-DO: UPDATE GUI LOGIC
         locationLabel.setText(weatherData.getLocation());
         temperatureLabel.setText(weatherData.getTemperature());
         conditionLabel.setText(weatherData.getCondition());
         highLabel.setText("High: " + weatherData.getHigh());
         lowLabel.setText("Low: " + weatherData.getLow());
+        timeLabel.setText(weatherData.getTime());
+
+        try {
+            File iconFile = new File(getWeatherIconPath(weatherData.getCondition(), weatherData.getTime()));
+            weatherImage = ImageIO.read(iconFile);
+
+            ImageIcon icon = new ImageIcon(weatherImage);
+            iconLabel.setIcon(icon);
+            iconLabel.repaint();
+
+        } catch (IOException e) {
+            weatherImage = null;
+        }
+
+        iconLabel.revalidate();
+        iconLabel.repaint();
     }
     public static void main(String[] args) {
         WeatherApp weatherApp = new WeatherApp();

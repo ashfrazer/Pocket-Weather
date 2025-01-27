@@ -19,6 +19,7 @@ public class WeatherScraperTest {
         assertNotNull(data.getCondition());
         assertNotNull(data.getHigh());
         assertNotNull(data.getLow());
+        assertNotNull(data.getTime());
     }
 
     @Test
@@ -33,5 +34,6 @@ public class WeatherScraperTest {
         assertEquals("No data found.", data.getCondition());
         assertEquals("No data found.", data.getHigh());
         assertEquals("No data found.", data.getLow());
+        assertEquals("No data found.", data.getTime());
     }
 }

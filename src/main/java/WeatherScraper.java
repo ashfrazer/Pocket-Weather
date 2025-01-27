@@ -2,8 +2,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
-
 public class WeatherScraper {
 
     public WeatherData scrapeData(String zipcode) throws WeatherScraperException {
@@ -16,6 +14,7 @@ public class WeatherScraper {
         String condition = "No data found.";
         String high = "No data found.";
         String low = "No data found.";
+        String time =  "No data found.";
 
         Document doc = null;
 
@@ -46,12 +45,23 @@ public class WeatherScraper {
                             "div.CurrentConditions--tempHiLoValue--Og9IG span[data-testid='TemperatureValue']")
                     .last());
 
+            // Scrape the time (on different page)
+            url = "https://weather.com/weather/hourbyhour/l/" + zipcode;
+            doc = Jsoup.connect(url).get();
+
+            time = getElementText(doc.select(
+                    "div.HourlyForecast--timestamp--l3YIP")
+                            .first());
+
+            // Remove "As of " at the beginning of time
+            time = time.substring(6);
+
         } catch (Exception e) {
             throw new WeatherScraperException("Error scraping weather data.");
         }
 
         // Create WeatherData object containing weather info
-        WeatherData weatherData = new WeatherData(location, temperature, condition, high, low);
+        WeatherData weatherData = new WeatherData(location, temperature, condition, high, low, time);
 
         // Return complete WeatherData object
         return weatherData;
