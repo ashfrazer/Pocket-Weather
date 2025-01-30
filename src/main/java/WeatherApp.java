@@ -212,7 +212,7 @@ public class WeatherApp extends JFrame {
             imagePath = "src/main/resources/imgs/snow.png";
         } else if (conditionLower.contains("rain") || conditionLower.contains("shower") ||
                 conditionLower.contains("hail")) {
-            imagePath = isDay ? "src/main/resources/imgs/rain.png" : "src/main/resources/imgs/rain-night.png";
+            imagePath = "src/main/resources/imgs/rain.png";
         } else if (conditionLower.contains("storm")) {
             imagePath = "src/main/resources/imgs/lightning.png";
         } else if (conditionLower.contains("clear") || conditionLower.contains("fair")) {
